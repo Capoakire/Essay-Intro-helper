@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Essay Introduction Practice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      color: #1a1a2e;
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+    }
+    .glow {
+      box-shadow: 0 0 15px rgba(199, 247, 247, 0.7); /* #C7F7F7 glow */
+    }
+    .container {
+      max-width: 5xl;
+      margin: 2rem auto;
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 1.5rem;
+      border: 3px solid #C7F7F7;
+    }
+    h1, h2 {
+      color: #3b82f6; /* Blue headings */
+    }
+    p {
+      color: #1a1a2e; /* Dark text */
+    }
+    textarea {
+      background: #ffffff;
+      color: #1a1a2e;
+      border: 2px solid #C7F7F7;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      width: 100%;
+      resize: vertical;
+      min-height: 120px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+    .char-counter {
+      color: #1a1a2e;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .error {
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .grammar-feedback {
+      background: rgba(199, 247, 247, 0.5); /* #C7F7F7 */
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .grammar-feedback button {
+      background: #3b82f6;
+      color: #ffffff;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      margin-left: 0.5rem;
+      font-size: 0.75rem;
+    }
+    .grammar-feedback button:hover {
+      background: #2563eb;
+    }
+    .error-highlight {
+      background: rgba(239, 68, 68, 0.2);
+      text-decoration: underline wavy #ef4444;
+    }
+    .sdg-highlight {
+      background: rgba(199, 247, 247, 0.5); /* #C7F7F7 */
+      padding: 0 0.25rem;
+      border-radius: 0.25rem;
+    }
+    button {
+      background: #3b82f6;
+      color: #ffffff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      font-weight: bold;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background: #2563eb;
+      transform: scale(1.05);
+    }
+    .download-btn {
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+    }
+    .progress-bar {
+      background: #e5e7eb;
+      border-radius: 0.5rem;
+      height: 1rem;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: #C7F7F7;
+      height: 100%;
+      transition: width 0.3s;
+    }
+    .icon {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    .celebration {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      animation: popIn 0.5s ease;
+    }
+    @keyframes popIn {
+      from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    .preview-section {
+      background: rgba(199, 247, 247, 0.2);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 768px) {
+      .container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="p-4">
+  <div class="container glow">
+    <h1 class="text-6xl font-bold text-center mb-8">
+      <svg class="icon w-8 h-8 fill-current inline-block" viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+      </svg>
+      Essay Introduction Practice
+    </h1>
+    <p class="text-xl text-center mb-4">Write a 75–100 word essay introduction for English beginners.</p>
+    <p class="text-xl text-center mb-8">Rephrase your answers from questions 1–4. Don’t copy!</p>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar glow">
+      <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-4">
+        <svg class="icon w-6 h-6 fill-current inline-block" viewBox="0 0 24 24">
+          <path d="M12 4a8 8 0 100 16 8 8 0 000-16zm0 2a6 6 0 110 12 6 6 0 010-12zm0 4v4m0 0l-2-2m2 2l2-2"></path>
+        </svg>
+        How to Write Your Essay
+      </h2>
+      <p class="text-xl">Write 75–100 words with 4 parts. Connect all parts to your SDG.</p>
+      <p class="text-xl mt-2">Example (77 words):</p>
+      <p class="text-lg italic">Clean water is important to me because it helps communities live better. I care about dirty water because it makes people sick. My work in Environmental Science supports Clean Water and Sanitation: Ensure clean water for all. Many people lack clean water, which harms their health. I love this major because I want to protect nature and solve big problems. This major and SDG matter to me because clean water makes lives stronger.</p>
+    </div>
+
+    <!-- Part 4 -->
+    <div class="mb-8">
+      <h2 class="text-3xl font-bold mb-2">
+        <svg class="icon w-6 h-6 fill-current inline-block" viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+        </svg>
+        Part 4: Why Job and SDG Matter
+      </h2>
+      <p class="text-xl">Why is your job/major (Q1) and SDG (Q3) important to you? Rephrase Q4.</p>
+      <p class="text-lg italic">Example: Clean water helps communities live better.</p>
+      <textarea id="part4" rows="4" placeholder="Write why your job and SDG matter..." aria-label="Why your job and SDG matter"></textarea>
+      <p id="part4-counter" class="char-counter">0 characters</p>
+      <p id="part4-error" class="error hidden">Please write something for Part 4.</p>
+      <button id="check-part4" aria-label="Check grammar for Part 4">Check Grammar</button>
+      <div id="part4-grammar" class="grammar-feedback hidden"></div>
+    </div>
+
+    <!-- Part 2 -->
+    <div class="mb-8">
+      <h2 class="text-3xl font-bold mb-2">
+        <svg class="icon w-6 h-6 fill-current inline-block" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path>
+        </svg>
+        Part 2: Problem You Care About
+      </h2>
+      <p class="text-xl">Talk about a problem tied to your SDG (Q4). Link it to a fact (Part 1). Rephrase Q4.</p>
+      <p class="text-lg italic">Example: Dirty water makes people sick.</p>
+      <textarea id="part2" rows="4" placeholder="Write about a problem you care about..." aria-label="Problem you care about"></textarea>
+      <p id="part2-counter" class="char-counter">0 characters</p>
+      <p id="part2-error" class="error hidden">Please write something for Part 2.</p>
+      <button id="check-part2" aria-label="Check grammar for Part 2">Check Grammar</button>
+      <div id="part2-grammar" class="grammar-feedback hidden"></div>
+    </div>
+
+    <!-- Part 3 -->
+    <div class="mb-8">
+      <h2 class="text-3xl font-bold mb-2">
+        <svg class="icon w-6 h-6 fill-current inline-block" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+        </svg>
+        Part 3: SDG Connection
+      </h2>
+      <p class="text-xl">Which SDG goal does your job help? Rephrase Q3.</p>
+      <p class="text-lg italic">Example: Supports Clean Water and Sanitation: Ensure clean water for all.</p>
+      <textarea id="part3" rows="4" placeholder="Write which SDG your job helps..." aria-label="SDG connection"></textarea>
+      <p id="part3-counter" class="char-counter">0 characters</p>
+      <p id="part3-error" class="error hidden">Please write something for Part 3.</p>
+      <button id="check-part3" aria-label="Check grammar for Part 3">Check Grammar</button>
+      <div id="part3-grammar" class="grammar-feedback hidden"></div>
+    </div>
+
+    <!-- Part 1 -->
+    <div class="mb-8">
+      <h2 class="text-3xl font-bold mb-2">
+        <svg class="icon w-6 h-6 fill-current inline-block" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path>
+        </svg>
+        Part 1: Hook + Fact + Job
+      </h2>
+      <p class="text-xl">Start with a fact about your SDG. Add your job/major (Q1) and why you like it (Q2). Rephrase.</p>
+      <p class="text-lg italic">Example: Many lack clean water. I love Environmental Science to protect nature.</p>
+      <textarea id="part1" rows="4" placeholder="Write your fact and job..." aria-label="Hook, fact, and job"></textarea>
+      <p id="part1-counter" class="char-counter">0 characters</p>
+      <p id="part1-error" class="error hidden">Please write something for Part 1.</p>
+      <button id="check-part1" aria-label="Check grammar for Part 1">Check Grammar</button>
+      <div id="part1-grammar" class="grammar-feedback hidden"></div>
+    </div>
+
+    <!-- Essay Preview -->
+    <div class="preview-section">
+      <h2 class="text-3xl font-bold mb-4">
+        <svg class="icon w-6 h-6 fill-current inline-block" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 4v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 20H6V4h7v5h5v13z"></path>
+        </svg>
+        Your Essay Preview
+      </h2>
+      <div id="essay-preview" class="p-4 bg-white rounded-lg mb-4 min-h-[100px]"></div>
+      <div id="essay-stats" class="text-center mb-4"></div>
+      <div class="text-center">
+        <button id="download" class="download-btn glow" aria-label="Download your essay">
+          <svg class="icon w-6 h-6 fill-current inline-block" viewBox="0 0 24 24">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path>
+          </svg>
+          Download Your Essay
+        </button>
+      </div>
+    </div>
+
+    <!-- Celebration Pop-up -->
+    <div id="celebration" class="celebration hidden">
+      <h2 class="text-3xl font-bold mb-4">🎉 Great Job! 🎉</h2>
+      <p class="text-xl mb-4">Your essay meets all requirements!</p>
+      <button id="close-celebration" class="download-btn glow" aria-label="Close celebration">
+        Keep Editing
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Grammar check function
+    function checkGrammar(text) {
+      const corrections = {
+        "\\bi\\b": "I",
+        "\\bdont\\b": "don't",
+        "\\bcant\\b": "can't",
+        "\\bwont\\b": "won't",
+        "\\balot\\b": "a lot",
+        "\\bteh\\b": "the",
+        "\\brecieve\\b": "receive",
+        "\\bseperate\\b": "separate",
+        "\\bim\\b": "I'm",
+        "\\byour\\b": "you're",
+        "\\bthere\\b": "their",
+        "\\btheyre\\b": "they're",
+        "\\bwould of\\b": "would have",
+        "\\bcould of\\b": "could have",
+        "\\bshould of\\b": "should have",
+        "\\bis\\b(\\s+)([^\\s]+\\s+)(are\\b)": "are $2is",
+        "\\bno\\s+have\\b": "don't have",
+        "\\b(\\w+)\\s+no\\s+article\\b": "$1"
+      };
+      let correctedText = text;
+      const suggestions = [];
+      Object.entries(corrections).forEach(([mistake, fix]) => {
+        const regex = new RegExp(mistake, "gi");
+        if (regex.test(correctedText)) {
+          correctedText = correctedText.replace(regex, fix);
+          suggestions.push(`Change "${mistake.replace(/\\b/g, '')}" to "${fix}"`);
+        }
+      });
+      const missingArticle = correctedText.match(/\b(sun|moon|water|school|job|world|environment|internet)\b/gi);
+      if (missingArticle) {
+        missingArticle.forEach(word => {
+          correctedText = correctedText.replace(new RegExp(`\\b${word}\\b`, "gi"), `the ${word}`);
+          suggestions.push(`Add "the" before "${word}"`);
+        });
+      }
+      const sentences = correctedText.split(/[.!?]+/).filter(s => s.trim().length > 0);
+      sentences.forEach(sentence => {
+        const words = sentence.trim().split(/\s+/);
+        if (words.length < 3) {
+          suggestions.push(`Expand short sentence: "${sentence.trim()}"`);
+        }
+      });
+      return { correctedText, suggestions };
+    }
+
+    // Highlight SDG keywords
+    function highlightSDG(text) {
+      const sdgKeywords = [
+        "No Poverty", "Zero Hunger", "Good Health", "Quality Education", 
+        "Gender Equality", "Clean Water", "Affordable Energy", "Decent Work", 
+        "Industry Innovation", "Reduced Inequalities", "Sustainable Cities", 
+        "Responsible Consumption", "Climate Action", "Life Below Water", 
+        "Life on Land", "Peace Justice", "Partnerships"
+      ];
+      let highlightedText = text;
+      sdgKeywords.forEach(keyword => {
+        const regex = new RegExp(`\\b${keyword}\\b`, "gi");
+        highlightedText = highlightedText.replace(regex, `<span class="sdg-highlight">${keyword}</span>`);
+      });
+      return highlightedText;
+    }
+
+    // Character counters, validation, and grammar check
+    const parts = ['part4', 'part2', 'part3', 'part1'];
+
+    function countWords(text) {
+      return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+    }
+
+    function countSentences(text) {
+      return text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+    }
+
+    function highlightErrors(text) {
+      const corrections = [
+        "i ", "dont", "cant", "wont", "alot", "teh", "recieve", "seperate",
+        "im ", "your ", "there ", "theyre ", "would of", "could of", "should of"
+      ];
+      let highlightedText = text;
+      corrections.forEach(mistake => {
+        const regex = new RegExp(`\\b${mistake}\\b`, "gi");
+        highlightedText = highlightedText.replace(regex, `<span class="error-highlight">${mistake}</span>`);
+      });
+      return highlightedText;
+    }
+
+    function updateCounterAndValidate(partId) {
+      const textarea = document.getElementById(partId);
+      const counter = document.getElementById(`${partId}-counter`);
+      const error = document.getElementById(`${partId}-error`);
+      const grammarBtn = document.getElementById(`check-${partId}`);
+      const grammarFeedback = document.getElementById(`${partId}-grammar`);
+
+      textarea.addEventListener('input', () => {
+        const charCount = textarea.value.length;
+        counter.textContent = `${charCount} characters`;
+        if (!textarea.value.trim()) {
+          error.classList.remove('hidden');
+        } else {
+          error.classList.add('hidden');
+        }
+        grammarFeedback.classList.add('hidden');
+        updateFeedback();
+        updateProgress();
+        updateEssayPreview();
+      });
+
+      grammarBtn.addEventListener('click', () => {
+        const { correctedText, suggestions } = checkGrammar(textarea.value);
+        if (suggestions.length) {
+          grammarFeedback.innerHTML = `
+            Suggestions: ${suggestions.join('; ')}
+            <button onclick="document.getElementById('${partId}').value = '${correctedText.replace(/'/g, "\\'")}'; this.parentElement.classList.add('hidden'); updateFeedback(); updateProgress(); updateEssayPreview();">Accept Changes</button>
+          `;
+          grammarFeedback.classList.remove('hidden');
+        } else {
+          grammarFeedback.innerHTML = 'No grammar issues found!';
+          grammarFeedback.classList.remove('hidden');
+          setTimeout(() => grammarFeedback.classList.add('hidden'), 2000);
+        }
+      });
+    }
+
+    parts.forEach(part => updateCounterAndValidate(part));
+
+    function updateProgress() {
+      const filledParts = parts.filter(id => document.getElementById(id).value.trim()).length;
+      const progress = (filledParts / parts.length) * 100;
+      document.getElementById('progress-fill').style.width = `${progress}%`;
+    }
+
+    function updateFeedback() {
+      const fullText = parts.map(id => document.getElementById(id).value.trim()).join(' ');
+      const wordCount = countWords(fullText);
+      const sentenceCount = countSentences(fullText);
+      const feedback = document.getElementById('essay-stats');
+      const allFilled = parts.every(id => document.getElementById(id).value.trim());
+      let feedbackText = '';
+      if (!allFilled) {
+        feedbackText = 'Please fill all parts.';
+      } else if (wordCount < 75) {
+        feedbackText = `Word count: ${wordCount}. Add ${75 - wordCount} more words.`;
+      } else if (wordCount > 100) {
+        feedbackText = `Word count: ${wordCount}. Remove ${wordCount - 100} words.`;
+      } else if (sentenceCount < 4) {
+        feedbackText = `Sentences: ${sentenceCount}. Aim for 4 or more sentences.`;
+      } else {
+        feedbackText = 'Great job! Your essay has 75–100 words and 4+ sentences.';
+        document.getElementById('celebration').classList.remove('hidden');
+        setTimeout(() => document.getElementById('celebration').classList.add('hidden'), 5000);
+      }
+      feedback.textContent = feedbackText;
+    }
+
+    function updateEssayPreview() {
+      const preview = document.getElementById('essay-preview');
+      const partsText = parts.map(id => document.getElementById(id).value.trim());
+      const fullText = partsText.join(' ');
+      const stats = {
+        words: countWords(fullText),
+        sentences: countSentences(fullText),
+        sdgCount: fullText.match(/\b(No Poverty|Zero Hunger|Good Health|Quality Education|Gender Equality|Clean Water|Affordable Energy|Decent Work|Industry Innovation|Reduced Inequalities|Sustainable Cities|Responsible Consumption|Climate Action|Life Below Water|Life on Land|Peace Justice|Partnerships)\b/gi)?.length || 0
+      };
+
+      if (!fullText.trim()) {
+        preview.innerHTML = '<p class="text-gray-500 italic">Your essay will appear here as you write...</p>';
+        return;
+      }
+
+      let statusText = '';
+      let statusClass = 'text-gray-600';
+      if (partsText.some(text => !text)) {
+        statusText = `Complete all 4 parts (${partsText.filter(t => t).length}/4 done)`;
+        statusClass = 'text-yellow-600';
+      } else if (stats.words < 75) {
+        statusText = `Add ${75 - stats.words} more words`;
+        statusClass = 'text-yellow-600';
+      } else if (stats.words > 100) {
+        statusText = `Remove ${stats.words - 100} words`;
+        statusClass = 'text-yellow-600';
+      } else if (stats.sentences < 4) {
+        statusText = 'Add more sentences for better flow';
+        statusClass = 'text-yellow-600';
+      } else if (stats.sdgCount < 1) {
+        statusText = 'Mention your SDG clearly';
+        statusClass = 'text-yellow-600';
+      } else {
+        statusText = 'Perfect! Ready to submit';
+        statusClass = 'text-green-600';
+      }
+
+      const partLabels = [
+        'Part 4: Why Job and SDG Matter',
+        'Part 2: Problem You Care About',
+        'Part 3: SDG Connection',
+        'Part 1: Hook + Fact + Job'
+      ];
+      const previewContent = partsText.map((text, index) => {
+        if (!text) return '';
+        const highlightedText = highlightErrors(highlightSDG(text));
+        return `<p class="font-semibold mt-2">${partLabels[index]}</p><p class="mb-2">${highlightedText}</p>`;
+      }).filter(content => content).join('');
+
+      preview.innerHTML = `
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-semibold">Essay Preview</span>
+            <span class="${statusClass} text-sm font-medium">${statusText}</span>
+          </div>
+          <div class="h-1 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 transition-all duration-300" style="width: ${Math.min((stats.words / 100) * 100, 100)}%"></div>
+          </div>
+        </div>
+        ${previewContent}
+      `;
+    }
+
+    // Download functionality
+    document.getElementById('download').addEventListener('click', () => {
+      const allFilled = parts.every(id => document.getElementById(id).value.trim());
+      if (!allFilled) {
+        alert('Please fill all parts before downloading.');
+        return;
+      }
+      const content = `
+Essay Introduction
+=================
+Part 4: Why Job and SDG Matter
+${document.getElementById('part4').value}
+
+Part 2: Problem You Care About
+${document.getElementById('part2').value}
+
+Part 3: SDG Connection
+${document.getElementById('part3').value}
+
+Part 1: Hook + Fact + Job
+${document.getElementById('part1').value}
+
+Word Count: ${countWords(parts.map(id => document.getElementById(id).value.trim()).join(' '))}
+=================
+Instructions: Check that your essay is 75–100 words with 4+ sentences. Each part should connect to your SDG. Use grammar check buttons to fix mistakes.
+      `;
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Essay_Introduction_${new Date().toISOString().slice(0, 10)}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
+
+    // Close celebration
+    document.getElementById('close-celebration').addEventListener('click', () => {
+      document.getElementById('celebration').classList.add('hidden');
+    });
+
+    updateProgress();
+    updateEssayPreview();
+  </script>
+</body>
+</html>
